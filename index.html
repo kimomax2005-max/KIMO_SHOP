@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KIMO | Premium Shop</title>
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#050508">
+
     <style>
         :root {
             --neon-blue: #00d2ff;
@@ -11,7 +16,6 @@
             --bg-dark: #050508;
             --glass: rgba(255, 255, 255, 0.08);
             --danger: #ff4d4d;
-            --success: #2ecc71;
         }
 
         body {
@@ -43,49 +47,42 @@
             position: fixed; width: 100%; height: 100vh; background: #000;
             display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999;
         }
-        .loader-text { font-size: 32px; font-weight: 900; letter-spacing: 5px; color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); animation: pulse 1.5s infinite; }
+        .loader-text { font-size: 32px; font-weight: 900; letter-spacing: 5px; color: var(--neon-blue); text-shadow: 0 0 15px var(--neon-blue); }
         .loading-bar { width: 180px; height: 3px; background: #111; border-radius: 10px; margin-top: 20px; overflow: hidden; }
         #bar-fill { width: 0%; height: 100%; background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); }
-        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
 
         header { display: flex; align-items: center; margin-bottom: 25px; margin-top: 10px; }
-        
-        .k-logo-container { 
-            width: 48px; height: 48px; border-radius: 14px; overflow: hidden;
-            display: flex; justify-content: center; align-items: center; 
-            margin-right: 15px; background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue));
-            border: 1px solid rgba(255,255,255,0.2);
-        }
+        .k-logo-container { width: 48px; height: 48px; border-radius: 14px; overflow: hidden; display: flex; justify-content: center; align-items: center; margin-right: 15px; background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue)); border: 1px solid rgba(255,255,255,0.2); }
         .k-logo-container img { width: 100%; height: 100%; object-fit: cover; }
         .k-logo-text { font-weight: 900; color: #000; font-size: 20px; }
 
+        /* --- Slider (Fix XY Ratio) --- */
         .slider-wrapper { padding: 3px; border-radius: 28px; background: linear-gradient(135deg, var(--neon-blue), transparent, var(--neon-purple)); box-shadow: 0 0 25px rgba(0, 210, 255, 0.4); margin-bottom: 30px; }
-        .slider-container { width: 100%; height: 210px; border-radius: 25px; overflow: hidden; position: relative; background: #000; }
+        .slider-container { width: 100%; aspect-ratio: 16 / 9; border-radius: 25px; overflow: hidden; position: relative; background: #000; }
         .slides { display: flex; width: 300%; height: 100%; transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1); }
         .slide { width: 100%; height: 100%; background-size: cover; background-position: center; display: flex; align-items: flex-end; }
-        .slide-overlay { width: 100%; padding: 15px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); font-weight: bold; font-size: 14px; color: var(--neon-blue); }
+        .slide-overlay { width: 100%; padding: 15px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); font-weight: bold; font-size: 14px; color: var(--neon-blue); text-transform: uppercase; }
 
+        /* --- Cards & Items --- */
         .card { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,255,255,0.1); padding: 22px; border-radius: 24px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; backdrop-filter: blur(15px); }
-        .btn-buy { background: var(--neon-blue); color: #000; padding: 12px 28px; border-radius: 18px; font-weight: 900; font-size: 13px; cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3); }
-
-        .price-item { background: rgba(0, 0, 0, 0.4); padding: 18px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-left: 5px solid var(--neon-purple); cursor: pointer; backdrop-filter: blur(10px); }
+        .btn-buy { background: var(--neon-blue); color: #000; padding: 12px 28px; border-radius: 18px; font-weight: 900; font-size: 13px; cursor: pointer; border: none; }
+        .price-item { background: rgba(0, 0, 0, 0.4); padding: 18px; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-left: 5px solid var(--neon-purple); cursor: pointer; }
         .back-arrow { font-size: 26px; color: var(--neon-blue); cursor: pointer; margin-right: 15px; }
 
-        .acc-grid-card { background: rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; position: relative; backdrop-filter: blur(10px); }
+        /* --- Account Post Styling --- */
+        .acc-grid-card { background: rgba(0,0,0,0.4); border-radius: 20px; overflow: hidden; border: 1px solid #222; margin-bottom: 15px; position: relative; }
         .grid-img { width: 100%; border-radius: 12px; height: 120px; object-fit: cover; margin-top: 10px; border: 1px solid #333; }
         .sold-out-badge { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); display: flex; justify-content: center; align-items: center; color: #ff0000; font-size: 28px; font-weight: 900; z-index: 10; transform: rotate(-10deg); border: 3px solid #ff0000; pointer-events: none; }
 
-        /* Admin UI */
+        /* --- Admin UI --- */
         .admin-section { background: var(--glass); padding: 20px; border-radius: 25px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.1); }
-        .admin-input { width: 100%; padding: 15px; margin-bottom: 15px; background: #0a0a0a; border: 1px solid #333; color: white; border-radius: 15px; box-sizing: border-box; }
+        .admin-input { width: 100%; padding: 12px; margin-bottom: 10px; background: #0a0a0a; border: 1px solid #333; color: white; border-radius: 12px; box-sizing: border-box; }
         .admin-btn { width: 100%; padding: 15px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
         .btn-primary { background: linear-gradient(45deg, var(--neon-purple), var(--neon-blue)); color: white; }
         .btn-outline { background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue); }
-        .admin-item { background: rgba(255,255,255,0.05); padding: 15px; border-radius: 20px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; border: 1px solid #222; }
-        .admin-item-actions { display: flex; gap: 10px; }
-        .action-btn { flex: 1; padding: 10px; border-radius: 10px; border: none; font-size: 12px; font-weight: bold; }
-        .btn-sold { background: var(--danger); color: white; }
-        .btn-del { background: #333; color: white; }
+        .admin-item { background: rgba(255,255,255,0.05); padding: 12px; border-radius: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; }
+        
+        #install-btn { display: none; background: #fff; color: #000; padding: 8px 15px; border-radius: 10px; font-size: 11px; font-weight: bold; border: none; margin-left: auto; }
     </style>
 </head>
 <body>
@@ -100,37 +97,30 @@
         <header>
             <div class="k-logo-container" id="main-logo-div"><span class="k-logo-text">K</span></div>
             <h2 style="margin:0; user-select:none;" onclick="secretAdmin()">KIMO SHOP</h2>
+            <button id="install-btn" onclick="installApp()">INSTALL</button>
         </header>
+
         <div class="slider-wrapper">
             <div class="slider-container">
                 <div class="slides" id="slide-track">
-                    <div class="slide" style="background-image: url('https://images.alphacoders.com/134/1341775.png');"><div class="slide-overlay">PREMIUM GAME TOPUP</div></div>
-                    <div class="slide" style="background-image: url('https://images8.alphacoders.com/133/1337482.jpeg');"><div class="slide-overlay">LEGENDARY ACCOUNTS</div></div>
-                    <div class="slide" style="background-image: url('https://images7.alphacoders.com/129/1293233.jpg');"><div class="slide-overlay">FAST & SECURE SERVICE</div></div>
+                    <div id="slide0" class="slide" style="background-image: url('https://images.alphacoders.com/134/1341775.png');"><div class="slide-overlay" id="slideText0">PREMIUM GAME TOPUP</div></div>
+                    <div id="slide1" class="slide" style="background-image: url('https://images8.alphacoders.com/133/1337482.jpeg');"><div class="slide-overlay" id="slideText1">LEGENDARY ACCOUNTS</div></div>
+                    <div id="slide2" class="slide" style="background-image: url('https://images7.alphacoders.com/129/1293233.jpg');"><div class="slide-overlay" id="slideText2">FAST & SECURE SERVICE</div></div>
                 </div>
             </div>
         </div>
+
         <div class="card" onclick="nav('diamond-page')"><div><h3>MLBB Diamonds</h3><p>Instant Delivery</p></div><button class="btn-buy">BUY</button></div>
         <div class="card" onclick="nav('acc-page')"><div><h3>MLBB Accounts</h3><p>Verified Items</p></div><button class="btn-buy">BUY</button></div>
         <div class="card" onclick="nav('tg-page')"><div><h3>Telegram Premium</h3><p>Gift Upgrade</p></div><button class="btn-buy">BUY</button></div>
     </div>
 
     <div id="diamond-page" class="page">
-        <header><span class="back-arrow" onclick="nav('main-page')">←</span><h2>MLBB Diamonds</h2></header>
-        <div class="price-item" onclick="orderTG('Weekly Diamond Pass', '6,500')"><span>Weekly Diamond Pass</span> <b>6,500 MMK</b></div>
-        <div class="price-item" onclick="orderTG('86 Diamonds', '4,800')"><span>86 Diamonds</span> <b>4,800 MMK</b></div>
-        <div class="price-item" onclick="orderTG('172 Diamonds', '9,500')"><span>172 Diamonds</span> <b>9,500 MMK</b></div>
-        <div class="price-item" onclick="orderTG('257 Diamonds', '14,200')"><span>257 Diamonds</span> <b>14,200 MMK</b></div>
-        <div class="price-item" onclick="orderTG('344 Diamonds', '18,500')"><span>344 Diamonds</span> <b>18,500 MMK</b></div>
-        <div class="price-item" onclick="orderTG('429 Diamonds', '23,500')"><span>429 Diamonds</span> <b>23,500 MMK</b></div>
-        <div class="price-item" onclick="orderTG('514 Diamonds', '28,000')"><span>514 Diamonds</span> <b>28,000 MMK</b></div>
-        <div class="price-item" onclick="orderTG('706 Diamonds', '38,500')"><span>706 Diamonds</span> <b>38,500 MMK</b></div>
-        <div class="price-item" onclick="orderTG('1050 Diamonds', '56,000')"><span>1050 Diamonds</span> <b>56,000 MMK</b></div>
-        <div class="price-item" onclick="orderTG('2195 Diamonds', '115,000')"><span>2195 Diamonds</span> <b>115,000 MMK</b></div>
-    </div>
+        <header><span class="back-arrow" onclick="nav('main-page')">←</span><h2>Diamonds</h2></header>
+        <div id="diamond-list"></div> </div>
 
     <div id="acc-page" class="page">
-        <header><span class="back-arrow" onclick="nav('main-page')">←</span><h2>MLBB Accounts</h2></header>
+        <header><span class="back-arrow" onclick="nav('main-page')">←</span><h2>Accounts</h2></header>
         <div id="acc-list"></div>
     </div>
 
@@ -141,30 +131,46 @@
 
     <div id="tg-page" class="page">
         <header><span class="back-arrow" onclick="nav('main-page')">←</span><h2>TG Premium</h2></header>
-        <div class="price-item" onclick="orderTG('TG 1 Month', '16,500')"><span>1 Month</span> <b>16,500 MMK</b></div>
-        <div class="price-item" onclick="orderTG('TG 3 Months', '46,000')"><span>3 Months</span> <b>46,000 MMK</b></div>
-        <div class="price-item" onclick="orderTG('TG 6 Months', '85,000')"><span>6 Months</span> <b>85,000 MMK</b></div>
-        <div class="price-item" onclick="orderTG('TG 1 Year', '135,000')"><span>1 Year</span> <b>135,000 MMK</b></div>
+        <div id="tg-list"></div>
     </div>
 
     <div id="admin-page" class="page">
         <header><span class="back-arrow" onclick="nav('main-page')">←</span><h2>Admin Panel</h2></header>
         
         <div class="admin-section">
-            <h3 style="margin:0 0 15px 0;">Logo & Background</h3>
-            <label style="font-size:12px;">Shop Logo:</label>
+            <h3 style="margin-top:0;">Slider Management</h3>
+            <div id="slider-admin-fields">
+                <div style="margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
+                    <label style="font-size:12px;">Slide 1 Image & Text:</label>
+                    <input type="file" id="adm-slide-img0" class="admin-input" accept="image/*">
+                    <input type="text" id="adm-slide-txt0" class="admin-input" placeholder="Slide 1 Text">
+                </div>
+                <div style="margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
+                    <label style="font-size:12px;">Slide 2 Image & Text:</label>
+                    <input type="file" id="adm-slide-img1" class="admin-input" accept="image/*">
+                    <input type="text" id="adm-slide-txt1" class="admin-input" placeholder="Slide 2 Text">
+                </div>
+                <div style="margin-bottom:15px;">
+                    <label style="font-size:12px;">Slide 3 Image & Text:</label>
+                    <input type="file" id="adm-slide-img2" class="admin-input" accept="image/*">
+                    <input type="text" id="adm-slide-txt2" class="admin-input" placeholder="Slide 3 Text">
+                </div>
+            </div>
+            <button class="admin-btn btn-primary" onclick="updateAllSliders()">SAVE ALL SLIDERS</button>
+        </div>
+
+        <div class="admin-section">
+            <h3 style="margin-top:0;">Logo & Background</h3>
             <input type="file" id="adm-logo" class="admin-input" accept="image/*">
             <button class="admin-btn btn-outline" onclick="updateLogo()">UPDATE LOGO</button>
-            <div style="height:1px; background:#333; margin:10px 0;"></div>
-            <label style="font-size:12px;">App Background:</label>
             <input type="file" id="adm-bg" class="admin-input" accept="image/*">
             <button class="admin-btn btn-outline" onclick="updateBg()">UPDATE BACKGROUND</button>
         </div>
 
         <div class="admin-section">
-            <h3 style="margin:0 0 15px 0;">New Account Post</h3>
-            <input type="text" id="adm-title" class="admin-input" placeholder="Title">
-            <textarea id="adm-desc" class="admin-input" style="height:80px;" placeholder="Details"></textarea>
+            <h3 style="margin-top:0;">New Account Post</h3>
+            <input type="text" id="adm-title" class="admin-input" placeholder="Account Name">
+            <textarea id="adm-desc" class="admin-input" style="height:60px;" placeholder="Details"></textarea>
             <input type="file" id="adm-files" class="admin-input" accept="image/*" multiple>
             <button class="admin-btn btn-primary" onclick="uploadAcc()">PUBLISH POST</button>
         </div>
@@ -174,30 +180,61 @@
     <script>
         function nav(id) { document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page')); document.getElementById(id).classList.add('active-page'); window.scrollTo(0,0); }
 
-        // Secret Admin Access
         let clickCount = 0;
         function secretAdmin() {
             clickCount++;
-            if(clickCount === 5) {
-                clickCount = 0;
-                nav('admin-page');
-            }
+            if(clickCount === 5) { clickCount = 0; nav('admin-page'); }
             setTimeout(() => { if(clickCount > 0) clickCount = 0; }, 3000);
         }
 
-        function orderTG(item, price) {
-            const msg = `Hello KIMO Shop,%0A%0A--- New Order ---%0AItem: ${item}%0APrice: ${price} MMK%0A%0Aငွေလွှဲအချက်အလက်ပေးပို့ပေးပါဗျာ။`;
-            window.location.href = `https://t.me/Ironman2005born?text=${msg}`;
+        // --- Slider Logic ---
+        async function updateAllSliders() {
+            for(let i=0; i<3; i++) {
+                const imgFile = document.getElementById(`adm-slide-img${i}`).files[0];
+                const textVal = document.getElementById(`adm-slide-txt${i}`).value;
+                
+                if(imgFile) {
+                    const b64 = await new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(imgFile); });
+                    localStorage.setItem(`kimo_slide_img${i}`, b64);
+                }
+                if(textVal) {
+                    localStorage.setItem(`kimo_slide_txt${i}`, textVal);
+                }
+            }
+            loadSliders();
+            alert("Sliders Updated!");
         }
 
+        function loadSliders() {
+            for(let i=0; i<3; i++) {
+                const savedImg = localStorage.getItem(`kimo_slide_img${i}`);
+                const savedTxt = localStorage.getItem(`kimo_slide_txt${i}`);
+                if(savedImg) document.getElementById(`slide${i}`).style.backgroundImage = `url('${savedImg}')`;
+                if(savedTxt) document.getElementById(`slideText${i}`).innerText = savedTxt;
+            }
+        }
+
+        function startSliderAuto() {
+            let idx = 0;
+            setInterval(() => { idx = (idx + 1) % 3; if(document.getElementById('slide-track')) document.getElementById('slide-track').style.transform = `translateX(-${idx * 33.33}%)`; }, 4000);
+        }
+
+        // --- Standard Logic ---
         let p = 0;
         const load = setInterval(() => {
             p += 10; document.getElementById('bar-fill').style.width = p + "%";
             if(p >= 100) { 
                 clearInterval(load); document.getElementById('loader').style.display = 'none'; 
-                nav('main-page'); startSlider(); displayAcc(); loadLogo(); loadBg(); checkSoldStatus(); 
+                nav('main-page'); startSliderAuto(); displayAcc(); loadLogo(); loadBg(); loadSliders(); checkSoldStatus(); renderPrices();
             }
         }, 60);
+
+        function renderPrices() {
+            const dms = [["Weekly Pass","6,500"],["86 Diamonds","4,800"],["172 Diamonds","9,500"],["257 Diamonds","14,200"],["344 Diamonds","18,500"],["429 Diamonds","23,500"],["514 Diamonds","28,000"],["706 Diamonds","38,500"],["1050 Diamonds","56,000"],["2195 Diamonds","115,000"]];
+            const tgs = [["1 Month","16,500"],["3 Months","46,000"],["6 Months","85,000"],["1 Year","135,000"]];
+            document.getElementById('diamond-list').innerHTML = dms.map(d => `<div class="price-item" onclick="orderTG('${d[0]}','${d[1]}')"><span>${d[0]}</span><b>${d[1]} MMK</b></div>`).join('');
+            document.getElementById('tg-list').innerHTML = tgs.map(t => `<div class="price-item" onclick="orderTG('TG ${t[0]}','${t[1]}')"><span>${t[0]}</span><b>${t[1]} MMK</b></div>`).join('');
+        }
 
         async function updateLogo() {
             const file = document.getElementById('adm-logo').files[0];
@@ -205,11 +242,9 @@
             const b64 = await new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(file); });
             localStorage.setItem('kimo_logo', b64); loadLogo(); alert("Logo Updated!");
         }
-
         function loadLogo() {
             const saved = localStorage.getItem('kimo_logo');
-            const div = document.getElementById('main-logo-div');
-            div.innerHTML = saved ? `<img src="${saved}">` : `<span class="k-logo-text">K</span>`;
+            document.getElementById('main-logo-div').innerHTML = saved ? `<img src="${saved}">` : `<span class="k-logo-text">K</span>`;
         }
 
         async function updateBg() {
@@ -218,18 +253,9 @@
             const b64 = await new Promise(res => { const r = new FileReader(); r.onload = () => res(r.result); r.readAsDataURL(file); });
             localStorage.setItem('kimo_bg', b64); loadBg(); alert("Background Updated!");
         }
-
         function loadBg() {
             const savedBg = localStorage.getItem('kimo_bg');
-            if(savedBg) {
-                document.body.style.backgroundImage = `url('${savedBg}')`;
-                document.getElementById('bg-overlay').style.background = 'rgba(0,0,0,0.6)';
-            }
-        }
-
-        function startSlider() {
-            let idx = 0;
-            setInterval(() => { idx = (idx + 1) % 3; if(document.getElementById('slide-track')) document.getElementById('slide-track').style.transform = `translateX(-${idx * 33.33}%)`; }, 4000);
+            if(savedBg) { document.body.style.backgroundImage = `url('${savedBg}')`; document.getElementById('bg-overlay').style.background = 'rgba(0,0,0,0.6)'; }
         }
 
         async function uploadAcc() {
@@ -246,47 +272,25 @@
             accounts.push({ id: Date.now(), title, desc, imgs, isSold: false, soldTime: null });
             localStorage.setItem('kimo_accounts', JSON.stringify(accounts));
             displayAcc(); alert("Posted!");
-            document.getElementById('adm-title').value = '';
-            document.getElementById('adm-desc').value = '';
+            document.getElementById('adm-title').value = ''; document.getElementById('adm-desc').value = '';
         }
 
         function displayAcc() {
             let accounts = JSON.parse(localStorage.getItem('kimo_accounts') || "[]");
-            const list = document.getElementById('acc-list');
-            const adminList = document.getElementById('admin-manage-list');
-            list.innerHTML = '';
-            adminList.innerHTML = '<h3>Post Management</h3>';
-            accounts.forEach(acc => {
-                list.innerHTML += `<div class="acc-grid-card">
-                    ${acc.isSold ? '<div class="sold-out-badge">SOLD OUT</div>' : ''}
-                    <img src="${acc.imgs[0]}" style="width:100%; height:180px; object-fit:cover;">
-                    <div style="padding:15px; display:flex; justify-content:space-between; align-items:center;">
-                        <h3 style="margin:0; font-size:16px;">${acc.title}</h3>
-                        <button class="btn-buy" style="padding:8px 15px; font-size:11px;" onclick="viewDetails(${acc.id})">VIEW ACC</button>
-                    </div>
-                </div>`;
-                adminList.innerHTML += `
-                    <div class="admin-item">
-                        <span style="font-weight:bold;">${acc.title} ${acc.isSold ? '(SOLD)' : ''}</span>
-                        <div class="admin-item-actions">
-                            ${!acc.isSold ? `<button class="action-btn btn-sold" onclick="markSold(${acc.id})">MARK SOLD</button>` : ''}
-                            <button class="action-btn btn-del" onclick="deleteAcc(${acc.id})">DELETE</button>
-                        </div>
-                    </div>`;
-            });
+            document.getElementById('acc-list').innerHTML = accounts.map(acc => `<div class="acc-grid-card">${acc.isSold ? '<div class="sold-out-badge">SOLD OUT</div>' : ''}<img src="${acc.imgs[0]}" style="width:100%; height:180px; object-fit:cover;"><div style="padding:15px; display:flex; justify-content:space-between; align-items:center;"><h3 style="margin:0; font-size:15px;">${acc.title}</h3><button class="btn-buy" style="padding:8px 15px; font-size:11px;" onclick="viewDetails(${acc.id})">VIEW</button></div></div>`).join('');
+            document.getElementById('admin-manage-list').innerHTML = '<h3>Post Management</h3>' + accounts.map(acc => `<div class="admin-item"><span>${acc.title}</span><div><button onclick="markSold(${acc.id})" style="background:red; color:white; border:none; padding:5px 10px; border-radius:5px; margin-right:5px;">Sold</button><button onclick="deleteAcc(${acc.id})" style="background:#444; color:white; border:none; padding:5px 10px; border-radius:5px;">X</button></div></div>`).join('');
         }
 
         function viewDetails(id) {
             let accounts = JSON.parse(localStorage.getItem('kimo_accounts') || "[]");
             let acc = accounts.find(a => a.id === id);
-            const content = document.getElementById('details-content');
-            content.innerHTML = `<div style="background:rgba(0,0,0,0.7); padding:20px; border-radius:20px;">
-                <img src="${acc.imgs[0]}" style="width:100%; border-radius:15px;">
-                <h3 style="color:var(--neon-blue);">${acc.title}</h3><p style="color:#ccc;">${acc.desc}</p>
-                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">${acc.imgs.map(i => `<img src="${i}" class="grid-img">`).join('')}</div>
-                <button class="btn-buy" style="width:100%; margin-top:20px; height:50px;" onclick="orderAcc(${acc.id})">CONTACT TO BUY</button>
-            </div>`;
+            document.getElementById('details-content').innerHTML = `<div style="background:rgba(0,0,0,0.7); padding:20px; border-radius:20px;"><img src="${acc.imgs[0]}" style="width:100%; border-radius:15px;"><h3>${acc.title}</h3><p style="color:#ccc;">${acc.desc}</p><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">${acc.imgs.map(i => `<img src="${i}" class="grid-img">`).join('')}</div><button class="btn-buy" style="width:100%; margin-top:20px; height:50px;" onclick="orderTG('Account: ${acc.title}','')">CONTACT TO BUY</button></div>`;
             nav('acc-details-page');
+        }
+
+        function orderTG(item, price) {
+            const msg = `Hello KIMO Shop,%0A%0AOrder: ${item}%0APrice: ${price}%0A%0Aငွေလွှဲပေးပါဦးဗျ။`;
+            window.location.href = `https://t.me/Ironman2005born?text=${msg}`;
         }
 
         function markSold(id) {
@@ -294,22 +298,18 @@
             let acc = accounts.find(a => a.id === id);
             if(acc) { acc.isSold = true; acc.soldTime = Date.now(); localStorage.setItem('kimo_accounts', JSON.stringify(accounts)); displayAcc(); }
         }
-
-        function deleteAcc(id) {
-            if(confirm("Delete this?")) {
-                let accounts = JSON.parse(localStorage.getItem('kimo_accounts') || "[]");
-                accounts = accounts.filter(a => a.id !== id);
-                localStorage.setItem('kimo_accounts', JSON.stringify(accounts)); displayAcc();
-            }
-        }
-
+        function deleteAcc(id) { if(confirm("Delete?")) { let accounts = JSON.parse(localStorage.getItem('kimo_accounts') || "[]"); accounts = accounts.filter(a => a.id !== id); localStorage.setItem('kimo_accounts', JSON.stringify(accounts)); displayAcc(); } }
         function checkSoldStatus() {
             let accounts = JSON.parse(localStorage.getItem('kimo_accounts') || "[]");
             let now = Date.now();
             let updated = accounts.filter(acc => !acc.isSold || (now - acc.soldTime) < (3 * 3600000));
             localStorage.setItem('kimo_accounts', JSON.stringify(updated));
         }
-        setInterval(checkSoldStatus, 60000);
+
+        // --- PWA Install ---
+        let defPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); defPrompt = e; document.getElementById('install-btn').style.display = 'block'; });
+        async function installApp() { if (defPrompt) { defPrompt.prompt(); const { outcome } = await defPrompt.userChoice; if (outcome === 'accepted') document.getElementById('install-btn').style.display = 'none'; defPrompt = null; } }
     </script>
 </body>
 </html>
