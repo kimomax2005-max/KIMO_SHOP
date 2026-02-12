@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIMO | AI Powered Shop</title>
+    <title>KIMO | Premium Shop</title>
     <style>
         :root {
             --neon-blue: #00d2ff;
@@ -32,7 +32,7 @@
         .active-page { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- Loader --- */
+        /* --- Loader (KIMO SHOP သို့ ပြောင်းထားသည်) --- */
         #loader {
             position: fixed; width: 100%; height: 100vh; background: #000;
             display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999;
@@ -106,7 +106,7 @@
     <div class="bg-glow"></div>
 
     <div id="loader">
-        <div class="loader-text">KIMO AI</div>
+        <div class="loader-text">KIMO SHOP</div>
         <div class="loading-bar"><div id="bar-fill"></div></div>
     </div>
 
@@ -139,7 +139,7 @@
         </div>
         <div class="card" onclick="nav('tg-page')">
             <div><h3 style="margin:0; font-size: 18px;">Telegram Premium</h3><p style="color:#666; margin-top:4px; font-size:13px;">Gift Upgrade</p></div>
-            <button class="btn-buy" onclick="window.location.href='https://t.me/Ironman2005born?text=Hello%20KIMO%20Shop,%20I%20want%20to%20buy%20Telegram%20Premium'">BUY</button>
+            <button class="btn-buy">BUY</button>
         </div>
 
         <div style="text-align: center; margin-top: 50px; opacity: 0.1; font-size: 11px;" onclick="nav('admin-page')">ADMIN PANEL</div>
@@ -171,8 +171,18 @@
 
     <div id="tg-page" class="page">
         <header><span class="back-arrow" onclick="nav('main-page')">←</span><h2>TG Premium</h2></header>
-        <div class="price-item" onclick="orderTG('TG 1 Month Premium', '16,000')"><span>1 Month Premium</span> <b>16,000 MMK</b></div>
-        <div class="price-item" onclick="orderTG('TG 1 Year Premium', '125,000')"><span>1 Year Premium</span> <b>125,000 MMK</b></div>
+        <div class="price-item" onclick="orderTG('TG 1 Month Premium', '16,000')">
+            <span>1 Month Premium</span> <b>16,000 MMK</b>
+        </div>
+        <div class="price-item" onclick="orderTG('TG 3 Months Premium', '45,000')">
+            <span>3 Months Premium</span> <b>45,000 MMK</b>
+        </div>
+        <div class="price-item" onclick="orderTG('TG 6 Months Premium', '85,000')">
+            <span>6 Months Premium</span> <b>85,000 MMK</b>
+        </div>
+        <div class="price-item" onclick="orderTG('TG 1 Year Premium', '125,000')">
+            <span>1 Year Premium</span> <b>125,000 MMK</b>
+        </div>
     </div>
 
     <div id="admin-page" class="page">
@@ -193,7 +203,7 @@
             window.scrollTo(0,0);
         }
 
-        // --- Telegram Order Function (Fixed for Ironman2005born) ---
+        // --- Telegram Order Function (Diamond ရော TG Premium အတွက်ပါ သုံးနိုင်သည်) ---
         function orderTG(item, price) {
             const adminTG = "Ironman2005born";
             const kpay = "09752949393";
