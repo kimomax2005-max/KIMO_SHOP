@@ -3,77 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIMO SHOP | Professional Cloud</title>
+    <title>KIMO SHOP | Fix Edition</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
     <style>
-        :root { --blue: #00d2ff; --pink: #bc13fe; --glass: rgba(255, 255, 255, 0.05); }
-        body { margin: 0; background: #050508; color: white; font-family: sans-serif; background-size: cover; background-position: center; background-attachment: fixed; transition: 0.5s; }
+        :root { --blue: #00d2ff; --pink: #bc13fe; }
+        body { margin: 0; background: #050508; color: white; font-family: sans-serif; transition: 0.5s; }
         #loader { position: fixed; width: 100%; height: 100vh; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
-        .page { display: none; padding: 20px; max-width: 800px; margin: auto; animation: fadeIn 0.5s; }
+        .page { display: none; padding: 20px; max-width: 800px; margin: auto; }
         .active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        header { display: flex; align-items: center; justify-content: center; padding: 20px 0; position: relative; }
-        .k-logo { width: 65px; height: 65px; border-radius: 18px; border: 2px solid var(--blue); overflow: hidden; box-shadow: 0 0 15px rgba(0,210,255,0.3); }
+        header { display: flex; align-items: center; justify-content: center; padding: 20px 0; }
+        .k-logo { width: 65px; height: 65px; border-radius: 18px; border: 2px solid var(--blue); overflow: hidden; }
         .k-logo img { width: 100%; height: 100%; object-fit: cover; }
-        .shop-title { margin-left: 15px; font-size: 26px; font-weight: 900; letter-spacing: 1px; cursor: pointer; }
-        .slider-container { width: 100%; aspect-ratio: 16/9; border-radius: 25px; overflow: hidden; margin-bottom: 30px; border: 1px solid #333; }
-        .slides { display: flex; width: 300%; height: 100%; transition: 0.8s cubic-bezier(0.45, 0, 0.55, 1); }
+        .shop-title { margin-left: 15px; font-size: 26px; font-weight: bold; cursor: pointer; }
+        .slider-container { width: 100%; aspect-ratio: 16/9; border-radius: 25px; overflow: hidden; margin-bottom: 20px; border: 1px solid #333; }
+        .slides { display: flex; width: 300%; height: 100%; transition: 0.8s; }
         .slide { width: 100%; height: 100%; background-size: cover; background-position: center; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .card { background: var(--glass); border: 1px solid #222; padding: 20px; border-radius: 22px; text-align: center; cursor: pointer; backdrop-filter: blur(10px); }
-        .buy-btn { width: 100%; background: linear-gradient(90deg, var(--blue), var(--pink)); border: none; color: white; padding: 14px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 10px; }
-        .admin-input { width: 100%; padding: 14px; margin-bottom: 12px; background: #111; border: 1px solid #333; color: white; border-radius: 12px; box-sizing: border-box; }
-        .price-row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .card { background: rgba(255,255,255,0.05); border: 1px solid #222; padding: 20px; border-radius: 22px; text-align: center; }
+        .buy-btn { width: 100%; background: linear-gradient(90deg, var(--blue), var(--pink)); border: none; color: white; padding: 14px; border-radius: 50px; font-weight: bold; cursor: pointer; }
+        .admin-input { width: 100%; padding: 12px; margin-bottom: 10px; background: #111; border: 1px solid #333; color: white; border-radius: 10px; box-sizing: border-box; }
     </style>
 </head>
 <body>
 
-<div id="loader"><h2>KIMO SHOP</h2><p>Initialing Cloud Sync...</p></div>
+<div id="loader">
+    <h2 style="color:var(--blue)">KIMO SHOP</h2>
+    <p id="load-status">Connecting to Database...</p>
+    <button onclick="nav('admin-page')" style="background:none;border:none;color:#333;margin-top:20px;">Force Admin</button>
+</div>
 
 <div id="main-page" class="page active-page">
     <header>
         <div class="k-logo"><img id="display-logo" src="https://placehold.co/100x100?text=K"></div>
         <div class="shop-title" onclick="secretAdmin()">KIMO SHOP</div>
     </header>
-
     <div class="slider-container">
         <div class="slides" id="slide-track">
-            <div id="s0" class="slide" style="background-image:url('https://placehold.co/800x450?text=Slide+1')"></div>
-            <div id="s1" class="slide" style="background-image:url('https://placehold.co/800x450?text=Slide+2')"></div>
-            <div id="s2" class="slide" style="background-image:url('https://placehold.co/800x450?text=Slide+3')"></div>
+            <div id="s0" class="slide" style="background-image:url('https://placehold.co/800x450?text=Slide1')"></div>
+            <div id="s1" class="slide" style="background-image:url('https://placehold.co/800x450?text=Slide2')"></div>
+            <div id="s2" class="slide" style="background-image:url('https://placehold.co/800x450?text=Slide3')"></div>
         </div>
     </div>
-
     <div class="grid">
-        <div class="card" onclick="nav('mlbb-page')"><h3>MLBB</h3><p>Diamonds Topup</p><button class="buy-btn">BUY NOW</button></div>
-        <div class="card" onclick="nav('pubg-page')"><h3>PUBG</h3><p>UC Topup</p><button class="buy-btn" style="background:var(--pink)">BUY NOW</button></div>
+        <div class="card"><h3>MLBB</h3><button class="buy-btn" onclick="nav('mlbb-page')">BUY</button></div>
+        <div class="card"><h3>PUBG</h3><button class="buy-btn" onclick="nav('mlbb-page')">BUY</button></div>
     </div>
 </div>
 
 <div id="mlbb-page" class="page">
-    <header><button onclick="nav('main-page')" style="position:absolute;left:0;background:none;border:1px solid #444;color:white;padding:8px 15px;border-radius:10px;">BACK</button><div class="shop-title">MLBB</div></header>
+    <button onclick="nav('main-page')">Back</button>
     <div id="mlbb-list"></div>
 </div>
 
 <div id="admin-page" class="page">
-    <header><div class="shop-title">CLOUD ADMIN</div></header>
-    
-    <label>Logo & Background Links</label>
-    <input type="text" id="adm-logo" class="admin-input" placeholder="Logo Direct Link">
-    <input type="text" id="adm-bg" class="admin-input" placeholder="Body Background Link">
-
-    <label>Slide Images (3 Photos)</label>
+    <h2 style="color:var(--blue)">CLOUD ADMIN</h2>
+    <input type="text" id="adm-logo" class="admin-input" placeholder="Logo Link">
     <input type="text" id="adm-s0" class="admin-input" placeholder="Slide 1 Link">
     <input type="text" id="adm-s1" class="admin-input" placeholder="Slide 2 Link">
     <input type="text" id="adm-s2" class="admin-input" placeholder="Slide 3 Link">
-
-    <label>Edit MLBB Items</label>
-    <div id="mlbb-edit-area"></div>
-    <button onclick="addPrice('mlbb')" class="buy-btn" style="background:#333; width:auto; padding:8px 20px;">+ Add Item</button>
-
-    <button class="buy-btn" style="background:green; margin-top:40px; height:60px; font-size:18px;" onclick="saveCloud()">SAVE ALL TO CLOUD</button>
-    <button class="buy-btn" style="background:#222;" onclick="nav('main-page')">EXIT ADMIN</button>
+    <div id="edit-area"></div>
+    <button onclick="addMore()" class="buy-btn" style="background:#333">+ Add Diamond Item</button>
+    <button class="buy-btn" style="background:green; margin-top:20px;" onclick="saveToCloud()">SAVE TO CLOUD</button>
+    <button class="buy-btn" style="background:#222; margin-top:10px;" onclick="location.reload()">RELOAD SITE</button>
 </div>
 
 <script>
@@ -88,86 +80,89 @@
     };
 
     firebase.initializeApp(firebaseConfig);
-    const db = firebase.database().ref('kimo_main_data');
+    
+    // အရေးကြီးဆုံးအချက်- Database Reference ကို တိုက်ရိုက်ယူမယ်
+    const dbRef = firebase.database().ref('shop_data');
 
-    let kData = {
-        logo: '', bg: '', s0: '', s1: '', s2: '',
-        mlbb: [{name: 'Sample 86 Diamonds', price: '2500'}],
-        pubg: []
+    let currentData = {
+        logo: '', s0: '', s1: '', s2: '',
+        mlbb: [{name: '86 Diamonds', price: '2500'}]
     };
 
-    // Firebase Listener
-    db.on('value', (snap) => {
-        if(snap.val()) {
-            kData = snap.val();
-            renderUI();
+    // Database ကနေ Data ဆွဲမယ်
+    dbRef.on('value', (snapshot) => {
+        const val = snapshot.val();
+        if(val) {
+            currentData = val;
+            updateUI();
+            document.getElementById('loader').style.display = 'none';
+        } else {
+            // Data မရှိသေးရင် Loading မှာ ပြောပြမယ်
+            document.getElementById('load-status').innerText = "Database is Empty. Please go to Admin to Setup!";
+            // ပထမဆုံးအကြိမ်ဆိုရင် Loading ကို ၁ စက္ကန့်အကြာမှာ ပိတ်ပေးလိုက်မယ်
+            setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 2000);
         }
-        document.getElementById('loader').style.display = 'none';
     });
 
-    function renderUI() {
-        if(kData.logo) document.getElementById('display-logo').src = kData.logo;
-        if(kData.bg) document.body.style.backgroundImage = `url('${kData.bg}')`;
-        if(kData.s0) document.getElementById('s0').style.backgroundImage = `url('${kData.s0}')`;
-        if(kData.s1) document.getElementById('s1').style.backgroundImage = `url('${kData.s1}')`;
-        if(kData.s2) document.getElementById('s2').style.backgroundImage = `url('${kData.s2}')`;
+    function updateUI() {
+        if(currentData.logo) document.getElementById('display-logo').src = currentData.logo;
+        if(currentData.s0) document.getElementById('s0').style.backgroundImage = `url('${currentData.s0}')`;
+        if(currentData.s1) document.getElementById('s1').style.backgroundImage = `url('${currentData.s1}')`;
+        if(currentData.s2) document.getElementById('s2').style.backgroundImage = `url('${currentData.s2}')`;
 
-        document.getElementById('mlbb-list').innerHTML = (kData.mlbb || []).map(i => `
-            <div style="display:flex; justify-content:space-between; padding:18px; background:var(--glass); margin-bottom:10px; border-radius:18px; border:1px solid #222;">
-                <span>${i.name}</span>
-                <b style="color:var(--blue)">${i.price} MMK</b>
+        document.getElementById('mlbb-list').innerHTML = (currentData.mlbb || []).map(i => `
+            <div style="padding:15px; background:rgba(255,255,255,0.05); margin-bottom:10px; border-radius:15px; display:flex; justify-content:space-between;">
+                <span>${i.name}</span><b>${i.price} MMK</b>
             </div>
         `).join('');
     }
 
-    let clicks = 0;
+    let c = 0;
     function secretAdmin() {
-        clicks++;
-        if(clicks >= 5) { nav('admin-page'); loadAdmin(); clicks = 0; }
-        setTimeout(() => clicks = 0, 2500);
+        c++; if(c>=5) { nav('admin-page'); loadAdminFields(); }
+        setTimeout(() => c=0, 2000);
     }
 
-    function loadAdmin() {
-        document.getElementById('adm-logo').value = kData.logo || '';
-        document.getElementById('adm-bg').value = kData.bg || '';
-        document.getElementById('adm-s0').value = kData.s0 || '';
-        document.getElementById('adm-s1').value = kData.s1 || '';
-        document.getElementById('adm-s2').value = kData.s2 || '';
-        renderEditArea();
+    function loadAdminFields() {
+        document.getElementById('adm-logo').value = currentData.logo || '';
+        document.getElementById('adm-s0').value = currentData.s0 || '';
+        document.getElementById('adm-s1').value = currentData.s1 || '';
+        document.getElementById('adm-s2').value = currentData.s2 || '';
+        renderEditList();
     }
 
-    function renderEditArea() {
-        document.getElementById('mlbb-edit-area').innerHTML = (kData.mlbb || []).map((i, idx) => `
-            <div class="price-row">
-                <input class="admin-input" value="${i.name}" onchange="kData.mlbb[${idx}].name=this.value">
-                <input class="admin-input" value="${i.price}" onchange="kData.mlbb[${idx}].price=this.value">
-                <button onclick="kData.mlbb.splice(${idx},1); renderEditArea()" style="background:red;border:none;color:white;border-radius:10px;padding:0 15px;margin-bottom:12px;">X</button>
+    function renderEditList() {
+        document.getElementById('edit-area').innerHTML = (currentData.mlbb || []).map((i, idx) => `
+            <div style="display:flex; gap:5px; margin-bottom:5px;">
+                <input class="admin-input" value="${i.name}" onchange="currentData.mlbb[${idx}].name=this.value">
+                <input class="admin-input" value="${i.price}" onchange="currentData.mlbb[${idx}].price=this.value">
             </div>
         `).join('');
     }
 
-    function addPrice(cat) { kData[cat].push({name: 'New Item', price: '0'}); renderEditArea(); }
+    function addMore() { currentData.mlbb.push({name:'New', price:'0'}); renderEditList(); }
 
-    function saveCloud() {
-        kData.logo = document.getElementById('adm-logo').value;
-        kData.bg = document.getElementById('adm-bg').value;
-        kData.s0 = document.getElementById('adm-s0').value;
-        kData.s1 = document.getElementById('adm-s1').value;
-        kData.s2 = document.getElementById('adm-s2').value;
-        db.set(kData).then(() => alert("Cloud Synced Successfully!"));
+    function saveToCloud() {
+        currentData.logo = document.getElementById('adm-logo').value;
+        currentData.s0 = document.getElementById('adm-s0').value;
+        currentData.s1 = document.getElementById('adm-s1').value;
+        currentData.s2 = document.getElementById('adm-s2').value;
+
+        dbRef.set(currentData).then(() => alert("Saved to Firebase Cloud!"));
     }
 
     function nav(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
         document.getElementById(id).classList.add('active-page');
+        document.getElementById('loader').style.display = 'none';
     }
 
-    // Slider Engine
-    let cur = 0;
+    // Slider
+    let sIdx = 0;
     setInterval(() => {
-        cur = (cur + 1) % 3;
-        document.getElementById('slide-track').style.transform = `translateX(-${cur * 33.33}%)`;
-    }, 4000);
+        sIdx = (sIdx + 1) % 3;
+        document.getElementById('slide-track').style.transform = `translateX(-${sIdx * 33.33}%)`;
+    }, 3000);
 </script>
 </body>
 </html>
